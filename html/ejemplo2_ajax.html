@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <button type="button" class="btn btn-outline-warning" id="leerXML">Llenar Tabla</button>
+        <table class="table table-striped">
+            <thead>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Direccion</th>
+                <th>C.P.</th>
+                <th>Pais</th>
+                <th>Region</th>
+                <th>Tipo</th>
+            </thead>
+            <tbody id="contenido"></tbody>
+        </table>
+
+
+    </div>
+    
+    <!-- Bootsrap Javascript Libraries -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script>
+        document.querySelector('leerXML').addEventListener('click', function(){
+            var xhrLeerXML = (window.XMLHttpRequest)? new XMLHttpRequest(): new ActiveXObject("Microsoft.XMLHTTP")
+
+            xhrLeerXML.onreadystatechannge = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    var oRespuesta = this.responseXML;
+
+                    var aUsuario = oRespuesta.getElementByTagName('record');
+                    //console.log(aUsuarios);
+
+                    sTabla= "";
+                    for(var i = 0; i < aUsuario.length; i++){
+                        //onsole.log(aUsuarios[i].getElementByTagName('id')[0].textContent);
+                        sTabla += '<tr><td>'+ aUsuarios[i].getElementByTagName('id')[0].textContent + '<td>';
+
+                        sTabla += '<td>'+ aUsuarios[i].getElementByTagName('nombre')[0].textContent + '<td>';
+
+                        sTabla += '<td>'+ aUsuarios[i].getElementByTagName('telefono')[0].textContent + '<td>';
+
+                        sTabla += '<td>'+ aUsuarios[i].getElementByTagName('correo')[0].textContent + '<td>';
+                        
+                        sTabla += '<tr><td>'+ aUsuarios[i].getElementByTagName('direccion')[0].textContent + '<td>';
+
+                        sTabla += '<td>'+ aUsuarios[i].getElementByTagName('codigo_postal')[0].textContent + '<td>';
+
+                        sTabla += '<td>'+ aUsuarios[i].getElementByTagName('pais')[0].textContent + '<td>';
+
+                        sTabla += '<td>'+ aUsuarios[i].getElementByTagName('region')[0].textContent + '<td>';
+
+                        sTabla += '<td>'+ aUsuarios[i].getElementByTagName('tipo')[0].textContent + '<td>';
+
+                    }
+
+                    document.querySelector('#contenido').innerHTML = sTabla;
+
+                }
+            };//fin de onreadystatechange
+
+            xhrLeerXML.open('GET', '../archivos/usuarios.xml');
+
+            xhrLeerXML.send();
+        });
+    </script>
+</body>
+</html>

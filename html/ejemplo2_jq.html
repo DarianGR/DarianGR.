@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery::JSON</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/fontawesome.min.css">
+    <link rel="stylesheet" href="../css/all.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <button type="button" class="btn btn-outline-warning" id="leerJSON">Llenar Tabla</button>
+        <table class="table table-striped">
+            <thead>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Correo</th>
+                <th>Direccion</th>
+                <th>C.P.</th>
+                <th>Pais</th>
+                <th>Region</th>
+                <th>Tipo</th>
+                <th>Accion</th>
+            </thead>
+            <tbody id="contenido"></tbody>
+        </table>
+
+    </div>
+
+        <!-- Zona de modales -->
+<!-- Modal -->
+<div class="modal fade" id="modalUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="titulo">Usuarios</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- <form class="d-flex">
+        <div class="col">
+          <div class="mb-3">
+            <label for="id" class="form-label">ID</label>
+            <input type="text" name="id" id="id" class="form-control" placeholder="ID" aria-describedby="helpId" readonly>
+            <small id="helpId" class="text-muted">Auto increment</small>
+          </div>
+        </div>
+      </form> -->
+      <div class="modal-body">
+        <form action="" method="POST" enctype="multipart/form-data" class="d-flex">
+          <div class="col">
+            <div class="form-group col-md-4">
+              <label for="usuario" class="form-label">ID</label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                <input type="text" name="id" id="id" class="form-control" class="form-control" required>
+                <small id="helpId" readonly class="text-muted">Auto increment</small>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Nombre" aria-describedby="helpId">
+              <small id="helpId" class="text-muted">Proporcione nombre completo:</small>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <!-- Bootsrap Javascript Libraries -->
+    <script src="../js/bootstrap.min.js"></script>
+
+    <script>
+        $(function(){
+            $('#leerJSON').on('click', function(){
+                $.getJSON('../archivos/usuarios2.json', function(oUsuarios){
+                  
+                    //limpiar el area de tbody
+                    $('#contenido').html('');                
+                    $.each(oUsuarios,function(index,usuario){
+                        $('#contenido').append('<tr><td>'+ usuario.id + '</td><td>'+ usuario.nombre + '</td>'+'<td>'+ usuario.telefono + '</td>'+'<td>'+ usuario.correo + '</td>'+'<td>'+ usuario.direccion + '</td>'+'<td>'+ usuario.codigo_postal + '</td>'+'<td>'+ usuario.pais + '</td>'+'<td>'+ usuario.region + '</td>'+'<td>'+ usuario.tipo + '</td><td><button type="button" class="btn btn-warning btn-sm" id="btnEditar" data-bs-toggle="modal" data-bs-target="#modalUsuario" data-accion="editar" data-id="'+ usuario.id +'"data-nombre="'+ usuario.nombre +'"data-telefono="'+ usuario.telefono +'"data-correo="'+ usuario.correo +'" ><i class="fa fa-edit"></i></button><button type="button" class="btn btn-danger btn-sm" id="btnEditar" data-bs-toggle="modal" data-bs-target="#modalUsuario" data-accion="borrar" data-id="'+ usuario.id +'"data-nombre="'+ usuario.nombre +'"data-telefono="'+ usuario.telefono +'"data-correo="'+ usuario.correo +'" ><i class="fa fa-trash"></i></button></td></tr>');
+                          
+                     
+                    });
+                });    
+            })
+        });//fin de carga de pagina
+
+        //funciones tambien aqui (recomendado)
+        $('#modalUsuario').on('shown.bs.modal', function(evt){
+          evt.preventDefault();
+          var aUsuario = $(evt.relatedTarget)
+          //console.log(aUsuario);
+          if(aUsuario.data('accion')=='editar'){
+            //modificar vista de la ventana
+            ('#titulo').html('Editar Usuario');
+            $('button[type="submit"]').html('<i class="fa fa-save">Guardar</i>').addClass('bg-warning');
+
+            //asignar valores a elementos de formulario
+            $('#id').val('id');
+            $('#nombre').val('nombre');
+
+          }else if(aUsuario.data('accion')== 'borrar'){
+            //modificar vista de la ventana
+            ('#titulo').html('Borrar Usuario');
+            $('button[type="submit"]').html('<i class="fa fa-save"></i>').addClass('bg-danger');
+
+            //asignar valores a elementos de formulario
+            $('#id').val('id');
+            $('#nombre').val('nombre');
+          }
+        });
+
+
+        
+    </script>
+    
+</body>
+</html>

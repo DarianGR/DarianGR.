@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo 2 JS</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+      <h3>Objetos</h3>
+      <script>
+        var miObjeto = {'Uno':2,'nombre':'Hugo'};
+        //listar
+        for(var llave in miObjeto){
+          document.write(miObjeto[llave]+' ');
+        }
+
+      </script>
+      <h3>Numeros</h3>
+      <script>
+        var miNumero=25;
+        document.write(miNumero);
+        document.write('<br>'),
+        document.write(miNumero.length);
+        var miNumero2= miNumero.toString();
+        document.write('<br>');
+        document.write(miNumero2.length);
+        document.write('<br>');
+        document.write(miNumero.toFixed(3));
+        document.write('<br>');
+
+        //Base 10, "Humana"
+        var cantidad= "1 docena 222";
+        document.write(parseInt(cantidad));
+        document.write('<br>');
+
+        //Base 2, "Binaria"
+        var cantidad2= "10";
+        document.write(parseInt(cantidad,2));
+
+        //Base 16, "Hexadecimal"
+        var cantidad3= "F";
+        document.write(parseInt(cantidad,16));
+        document.write('<br>');
+        document.write('Uso de objeto Number: '+ Number.parseInt(cantidad));
+      </script>      
+      <hr>
+      <h3>Arreglos</h3>
+      <script>
+        "use strict"
+        var miArreglo = ["A", 1];
+        miArreglo[2]= "Fuera de ...";
+        document.write('<br>');
+        document.write('Primera Posicion '+ miArreglo[0]);
+        document.write('<br>');
+        document.write('Primera Posicion '+ miArreglo[1]);
+        document.write('<br>');
+        document.write('Tercera Posicion '+ miArreglo[2]);
+        miArreglo.push(36);
+        //listo los items del arreglo
+        miArreglo.forEach(function(valor,llave,miArreglo){
+          console.log(valor+' '+llave);
+        });
+
+        //otra forma
+        miArreglo.forEach(valor=> console.log(valor));
+      </script>
+      <div id="saludo" onclick="saludar();">Saludar</div>
+      <hr>
+        <button type="button" id="crearTabla" class="btn bg/info">Crear Tabla</button>
+      <hr>
+      <h3>Tabla</h3>
+      <div id="contenidoTabla">
+        <p>Aqui se mostrar&aacute; la tabla</p>
+      </div>
+      <hr>
+        <form action="" method="get" onsubmit="return validar()">
+            <div class="mb-3">
+              <label for="" class="form-label">Nombre: </label>
+              <input type="text"
+                class="form-control form-control-sm" name="nombre" id="nombre" aria-describedby="helpId" placeholder="Nombre">
+              <small id="helpId" class="form-text text-muted">Introduzca el nombre.</small>
+            </div>
+            <button type="submit" class="btn btn-success">Enviar</button>
+            
+
+        </form>
+    </div>
+    
+    <script src="../js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+/*@import url('Otro archivo.css');*/
+
+/* CSS esta compuesto por reglas */
+body
+{ background-color: bisque;}
+/* Agrupadores: , espacios, <, > 
+van a ser importantes los selectores tipo clase y tipo id */
+.titulo { color: white;}
+.texto {color:chocolate;
+        font-size: 1.2rem;
+}
+
+/*p.titulo {background-color: black;}*/
+
+span#uno {border: 1px solid red;}
+
+/* Manejo de resoluciones */
+@media screen {
+        /* reglas */
+}
+/* Pseudo clase */
+a:hover#externo { color: chartreuse;}
+a:visited, a:link, a:active {color: crimson;}
+/* pseudo elemento */
+p::first-letter {font-size: 1.5rem;}

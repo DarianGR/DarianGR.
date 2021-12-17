@@ -1,0 +1,52 @@
+/* modelo de caja::first-letter
+margen, bordes, relleno, ancho y alto, fondo */
+div.contenedor{
+    width: 95%;
+    height: auto;
+    border: 5px solid rgb(176, 147, 255);
+    margin: 0 auto;
+    padding-left: 10px;/*mover hacia la izquierda*/
+    /* background: rgb(65, 207, 200) url('../img/LIDERAR.jpg') no-repeat; */
+    
+
+}
+
+
+
+/* Menu */
+ul.menu{
+
+    list-style-type: none;
+    margin: 0;
+    padding:0;
+    overflow: hidden;
+    background: cadetblue;
+}
+
+ul.menu li {float: left;}
+
+ul.menu li a {
+    text-decoration: none;
+    color: white;
+    padding: 14px 16px;
+    text-align: center;
+}
+
+ul.menu li a:hover{
+    background: rgb(8, 143, 69);
+} 
+
+.activo {
+    background: black;
+}
+
+div#contenedor section iframe {width: 100%;}
+
+div#contenedor footer {
+    width: 98%;
+    height: 30px;
+    margin: 0 auto;
+    padding: 5px;
+    background: darkblue;
+    text-align: center;
+}

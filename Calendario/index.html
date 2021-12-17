@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+
+    <!-- Libreria para iconos de Flechas -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+    <!-- Fuente de google para css "Quicksand" -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+
+/* NOTA: Algunos parametros no se comentaron para evitar la redundancia de informacion*/
+
+/* Parametros default para todos los elementos */
+* {
+    margin: 0;
+    padding: 0;
+    /* Caja que va a contener todos los elementos */
+    box-sizing: border-box;
+    /* Fuente de google referenciada en index.html  */
+    font-family: "Quicksand", sans-serif;
+  }
+  
+  /* Se reduce el tamaño de la letra para que no ocupe toda la pantalla */
+  html {
+    font-size: 62.5%;
+  }
+  /* Propiedades para el contenedor de todo el proyecto */
+  .container {
+    width: 100%;
+    /* Altura del viewport */
+    height: 100vh;
+    background-color: #12121f;
+    /* Color del texto */
+    color: #eee;
+    /* Establecer el contenedor de tipo flex para que los items contenidos en .container tengan el comportamiento de alinearse en una fila */
+    display: flex;
+    /* Centrar el calendario horizontalmente */
+    justify-content: center;
+    /* Centrar el calendario verticalmente */
+    align-items: center;
+  }
+  /* Propiedades para el contenedor de calendario */
+  .calendar {
+    width: 45rem;
+    height: 52rem;
+    background-color: #000c50;
+    /*Tamaño de la sombra del contenedor y opacidad */
+    box-shadow: 0 0.5rem 3rem rgba(255, 255, 255, 0.4);
+  }
+  /* Propiedades para el contenedor del mes*/
+  .month {
+    width: 100%;
+    height: 12rem;
+    background-color: #b8610f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    text-align: center;
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+  }
+  /* Propiedades para las flechas que se utilizan para navegar hacia otros meses */
+  .month i {
+    font-size: 2.5rem;
+    /* Se cambia el cursor cuando se coloca sobre cualquier flecha del calendario */
+    cursor: pointer;
+  }
+  /* Propíedades para el nombre del mes */
+  .month h1 {
+    font-size: 3rem;
+    font-weight: 400;
+    /* Se cambia a mayusculas el nombre del mes */
+    text-transform: uppercase;
+    /* Espacio de letra */
+    letter-spacing: 0.2rem;
+    /* Margen del fondo */
+    margin-bottom: 1rem;
+  }
+  /* Propiedades para la fecha actual */
+  .month p {
+    font-size: 1.6rem;
+  }
+  /* Propiedades para los dias de la semana */
+  .weekdays {
+    width: 100%;
+    height: 5rem;
+    padding: 0 0.4rem;
+    display: flex;
+    align-items: center;
+  }
+  /* Propiedades para el contenedor de los dias de la semana */
+  .weekdays div {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: 0.1rem;
+    /* Dividir entre 7 el ancho del contenedor para colocar con anchura equitativa a cada dia de la semana */
+    width: calc(44.2rem / 7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+  }
+  /* Propiedades para los dias del mes */
+  .days {
+    width: 100%;
+    display: flex;
+    /* Esta propiedad permite que se puedan poner en multilinea los dias */
+    flex-wrap: wrap;
+    padding: 0.2rem;
+  }
+  /* Propiedades para el contenedor de los dias del mes */
+  .days div {
+    font-size: 1.4rem;
+    margin: 0.3rem;
+    width: calc(40.2rem / 7);
+    height: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Propiedades para el contenedor de cada dia  */
+  /* Se especifica que se utilizará cuando el cursor esté sobre algun dia pero con excepcion del dia actual */
+  .days div:hover:not(.today) {
+    background-color: #000000;
+    /* Esto hace que se vea el marco cuando se coloca el cursor sobre algun dia */
+    border: 0.2rem solid rgb(255, 255, 255);
+    cursor: pointer;
+  }
+  
+  /* Cambiar la opacidad de los dias del mes anterior y de los dias del mes siguiente */
+  .prev-date,
+  .next-date {
+    opacity: 0.5;
+  }
+  
+  /* Se cambia el color de fondo del dia actual */
+  .today {
+    background-color: #b8610f;
+  }
+    </style>
+</head>
+<body>
+    <!-- Contenedor -->
+    <div class="container">
+        <!-- Div para el calendario en general -->
+        <div class="calendar">
+            <!-- div para la parte del mes -->
+          <div class="month">
+              <!-- Icono de flecha izquierda de fontawesome para meses anteriores al actual -->
+            <i class="fas fa-angle-left prev"></i>
+            <!-- div para colocar el nombre del mes y la fecha actual -->
+            <div class="date">
+            <!-- Aqui va el nombre del mes -->
+              <h1></h1>
+              <!-- Aqui va la fecha actual -->
+              <p></p>
+            </div>
+            <!-- Icono de flecha derecha de fontawesome para meses posteriores al actual -->
+            <i class="fas fa-angle-right next"></i>
+          </div>
+          <!-- Columnas de dias de la semana  -->
+          <div class="weekdays">
+            <div>Dom</div>
+            <div>Lun</div>
+            <div>Mar</div>
+            <div>Mier</div>
+            <div>Jue</div>
+            <div>Vie</div>
+            <div>Sab</div>
+          </div>
+          <!-- Dias del mes -->
+          <div class="days"></div>
+        </div>
+      </div>
+
+      <!-- Archivo JavaScript -->
+      <script>
+                
+                //Objeto del tipo Date con el nombre de date
+        const date = new Date();
+
+        //Esta funcion permite mostrar el calendario con las propiedades que tiene dentro de ella
+        //La funcion esta en forma compacta, la forma tradicional seria:
+        //const renderCalendar = function(){}
+        const renderCalendar = () => {
+          date.setDate(1);
+        //seleccionar el contenedor para los dias para posteriormente modificarlo
+          const monthDays = document.querySelector(".days");
+
+        //En esta variable se guarda el ultimo dia del mes actual 
+        //.getFullYear() devuelve el año actual
+        //getMonth() devuelve el mes actual
+        //Si se especifica 1, el resultado seria el numero del primer dia del mes y año actual
+        //Si se especifica 0, el resultado seria el numero del ultimo dia del mes anterior al actual, puede ser 30, 31 o 28
+          const lastDay = new Date(
+            date.getFullYear(),
+            //se le suma 1 porque getMonth es en base a cero
+            date.getMonth() + 1,
+            0
+          ).getDate();
+          
+
+        //En esta variable se guarda el ultimo dia que tiene el mes anterior al actual (30 0 31, 28 en caso de febrero)
+          const prevLastDay = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            0
+          ).getDate();
+
+          //Se guarda el indice del dia en el que cae el primero 
+          //domingo=0, lunes=1, martes=2, miercoles=3...
+          //si el date.getDay devuelve 5, quiere decir que el primer dia del mes cae en jueves
+          const firstDayIndex = date.getDay();
+
+          //Se guarda el indice del dia en el que cae el ultimo 
+          const lastDayIndex = new Date(
+            date.getFullYear(),
+            date.getMonth() + 1,
+            0
+          ).getDay();
+
+          //variable que sirve para guardar el numero de dias que faltan para llenar el calendario (dias del siguiente mes)
+          //La semana tiene 7 dias y por eso se le quita el index del ultimo dia menos 1 extra (porque el index es en base cero) 
+          const nextDays = 7 - lastDayIndex - 1;
+        //Array con todos los meses de año para posteriormente poderlo mandar al h1 de html
+          const months = [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre",
+          ];
+        //date.getMonth devuelve el index en base a cero de cada mes,
+        //Por ejemplo: El index 1 se refiere a Febrero 
+        //Es por eso que se especifica que el array con el indice que devuelva el objeto date, es el que se mostrará en la etiqueta h1 de html
+          document.querySelector(".date h1").innerHTML = months[date.getMonth()];
+        //Se coloca la fecha en el parrafo correspondiente utilizando el metodo .toDateString(), el cual devuelve la fecha actual en un formato legible 
+          //document.querySelector(".date p").innerHTML = new Date().toDateString();
+
+          //la siguiente variable se utiliza para personalizar como se mostrará la fecha, se especifica el nombre completo del dia, el año en numerico, nombre completo del mes y el dia en numerico
+          var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+          document.querySelector(".date p").innerHTML = new Date().toLocaleDateString('es-ES',options);
+        //Utilizando let, la variable solo se podrá utilizar en este bloque de codigo
+          let days = "";
+
+          //La siguiente rutina funciona para establecer los ultimos dias del anterior mes 
+          //Si la variable de firstDayIndex esta en 5, eso quiere decir que el primer dia del mes esta en viernes, eso quiere decir que queda espacio para 5 dias mas, los del mes anterior
+          //
+          for (let x = firstDayIndex; x > 0; x--) {
+            //days es para guardar la clase del div en donde se van a colocar los numeros que faltan 
+            days += `<div class="prev-date">${prevLastDay - x + 1}</div>`;
+          }
+          
+
+          //En esta rutina se establecen los dias que si corresponden al mes actual, pero se establece un filtro para detectar el dia actual
+          for (let i = 1; i <= lastDay; i++) {
+            //Filtro para detectar el dia actual
+            if (
+              i === new Date().getDate() &&
+              date.getMonth() === new Date().getMonth()
+            ) {
+              //Si es el dia actual se especifica que va hacia la etiqueta con clase "today"
+              days += `<div class="today">${i}</div>`;
+            } else {
+              //Se establecen los demas dias excepto el actual
+              days += `<div>${i}</div>`;
+            }
+          }
+
+          //En este ciclo se establecen los numeros del mes siguiente que completan el calendario
+          for (let j = 1; j <= nextDays; j++) {
+            days += `<div class="next-date">${j}</div>`;
+            //se estalecen los dias
+            monthDays.innerHTML = days;
+          }
+        };
+
+        //Cuando se da click en la flecha para ir al mes anterior, se establece el nombre del mes correspondiente y se establece toda la configuracion del calendario
+        document.querySelector(".prev").addEventListener("click", () => {
+          date.setMonth(date.getMonth() - 1);
+          renderCalendar();
+        });
+
+        //Cuando se da click en la flecha para ir al mes siguiente, se establece el nombre del mes correspondiente y se establece toda la configuracion del calendario
+        document.querySelector(".next").addEventListener("click", () => {
+          date.setMonth(date.getMonth() + 1);
+          renderCalendar();
+        });
+
+        //Se ejecuta la configuracion del calendario
+        renderCalendar();
+
+      </script>
+
+</body>
+
+</html>
